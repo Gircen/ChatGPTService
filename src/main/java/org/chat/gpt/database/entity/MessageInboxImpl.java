@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
@@ -13,14 +14,13 @@ import java.util.UUID;
 @Table(name = "message_inbox", catalog = "chat_gpt")
 public class MessageInboxImpl extends Message{
 
+    @Id
     Long id;
     @Column(columnDefinition = "uuid")
     UUID uuid;
+
     @Column(columnDefinition = "varchar")
     String message;
-
-    @javax.persistence.Id
-    public Long getId() {
-        return id;
-    }
 }
+
+
