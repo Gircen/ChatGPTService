@@ -1,10 +1,9 @@
 package org.chat.gpt.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.chat.gpt.config.ApplicationConfig;
 import org.chat.gpt.controller.template.ControllerImpl;
-import org.chat.gpt.database.dao.repository.MessageRepositoryInbox;
 import org.chat.gpt.database.dao.repository.MessageRepositoryOutbox;
-import org.chat.gpt.database.entity.MessageInboxImpl;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -19,8 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.ws.rs.ServiceUnavailableException;
 import java.net.URI;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.concurrent.ExecutionException;
 
 
 @EnableAutoConfiguration
@@ -32,10 +30,12 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     private final RestTemplate restTemplate;
     private final ApplicationConfig applicationConfig;
     private final MessageRepositoryOutbox repository;
+    private final OpenAiController openAiController;
 
-    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryOutbox repository) {
+    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryOutbox repository, OpenAiController openAiController) {
         this.discoveryClient = discoveryClient;
         this.repository = repository;
+        this.openAiController = openAiController;
         this.restTemplate = new RestTemplate();
         this.applicationConfig = applicationConfig;
     }
@@ -49,7 +49,7 @@ public class ConsulClientControllerImpl extends ControllerImpl {
 
     @Override
     @GetMapping("/")
-    public ResponseEntity<String> getMap() throws RestClientException {
+    public ResponseEntity<String> getMap() throws RestClientException, JsonProcessingException, ExecutionException {
         return super.getMap();
     }
 

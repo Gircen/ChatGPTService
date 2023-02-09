@@ -1,4 +1,5 @@
 package org.chat.gpt.model;
 
-public class Message {
+public class OpenAiModel {
+
 }

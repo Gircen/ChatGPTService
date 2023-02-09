@@ -1,5 +1,6 @@
 package org.chat.gpt.controller.template;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import j2html.tags.DomContent;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestClientException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 import static j2html.TagCreator.*;
 
@@ -86,7 +88,7 @@ public abstract class ControllerImpl implements Controller{
 
 
     @GetMapping("/")
-    public ResponseEntity<String> getMap() throws RestClientException{
+    public ResponseEntity<String> getMap() throws RestClientException, JsonProcessingException, ExecutionException {
 
         String result =
                 html(

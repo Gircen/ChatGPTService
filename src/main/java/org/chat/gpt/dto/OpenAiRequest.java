@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -19,14 +20,14 @@ public class OpenAiRequest extends AbstractOpenApiDto{
     String prompt;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Double temperature;
+    Integer temperature;
 
     @JsonProperty("max_tokens")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    Short maxTokens;
+    Integer maxTokens;
 
     @JsonProperty("top_p")
-    Short topP;
+    Double topP;
 
     @JsonProperty("frequency_penalty")
     Double frequencyPenalty;
