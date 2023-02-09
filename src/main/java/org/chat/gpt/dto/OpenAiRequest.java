@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OpenAiRequest extends AbstractOpenApiDto{
 
