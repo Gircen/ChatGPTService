@@ -2,7 +2,7 @@ package org.chat.gpt.controller;
 
 import org.chat.gpt.config.ApplicationConfig;
 import org.chat.gpt.controller.template.ControllerImpl;
-import org.chat.gpt.database.dao.repository.MessageRepository;
+import org.chat.gpt.database.dao.repository.MessageRepositoryInbox;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -27,9 +27,9 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     private final DiscoveryClient discoveryClient;
     private final RestTemplate restTemplate;
     private final ApplicationConfig applicationConfig;
-    private final MessageRepository repository;
+    private final MessageRepositoryInbox repository;
 
-    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepository repository) {
+    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryInbox repository) {
         this.discoveryClient = discoveryClient;
         this.repository = repository;
         this.restTemplate = new RestTemplate();
@@ -46,7 +46,6 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     @Override
     @GetMapping("/")
     public ResponseEntity<String> getMap() throws RestClientException {
-        repository.findAll();
         return super.getMap();
     }
 

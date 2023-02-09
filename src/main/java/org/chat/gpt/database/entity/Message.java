@@ -20,6 +20,9 @@ import java.util.Date;
 @Data
 public abstract class Message implements Serializable {
 
+    @Id
+    private Long id;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate

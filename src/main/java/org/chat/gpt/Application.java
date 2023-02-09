@@ -7,10 +7,12 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.kafka.annotation.EnableKafka;
 
 import java.io.IOException;
@@ -28,9 +30,10 @@ import java.io.IOException;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableKafka
+@EntityScan("org.chat.gpt.database.entity")
 @EnableJpaAuditing
+@EnableJpaRepositories("org.chat.gpt.database.dao.repository")
 public class Application {
-
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

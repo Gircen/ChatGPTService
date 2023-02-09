@@ -1,7 +1,8 @@
 package org.chat.gpt.database.entity;
 
 
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,9 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
 
-@Setter
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "message_inbox", catalog = "chat_gpt")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@DynamicUpdate
+@Table(name = "message_inbox")
 public class MessageInboxImpl extends Message{
 
     @Id
@@ -21,7 +26,7 @@ public class MessageInboxImpl extends Message{
     UUID uuid;
 
     @Column(columnDefinition = "varchar")
-    String message;
+    String value;
 }
 
 
