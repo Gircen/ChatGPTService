@@ -2,10 +2,10 @@ package org.chat.gpt.controller;
 
 import org.chat.gpt.config.ApplicationConfig;
 import org.chat.gpt.controller.template.ControllerImpl;
+import org.chat.gpt.database.dao.repository.MessageRepository;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +27,11 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     private final DiscoveryClient discoveryClient;
     private final RestTemplate restTemplate;
     private final ApplicationConfig applicationConfig;
+    private final MessageRepository repository;
 
-
-    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig) {
+    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepository repository) {
         this.discoveryClient = discoveryClient;
+        this.repository = repository;
         this.restTemplate = new RestTemplate();
         this.applicationConfig = applicationConfig;
     }
@@ -45,11 +46,13 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     @Override
     @GetMapping("/")
     public ResponseEntity<String> getMap() throws RestClientException {
+        repository.findAll();
         return super.getMap();
     }
 
     @GetMapping("/health-check/")
     public ResponseEntity<String> checkHealth () throws Exception {
+
         String message = "I a live!";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
