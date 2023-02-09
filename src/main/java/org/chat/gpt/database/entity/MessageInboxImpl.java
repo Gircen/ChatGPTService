@@ -19,9 +19,6 @@ import java.util.UUID;
 @Table(name = "message_inbox")
 public class MessageInboxImpl extends Message{
 
-    @Id
-    Long id;
-
     @Column(columnDefinition = "uuid")
     UUID uuid;
 

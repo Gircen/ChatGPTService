@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MessageKafkaDto extends AbstractDto{
+public class MessageKafkaDto extends AbstractDto {
     private Long id;
     private String value;
 }

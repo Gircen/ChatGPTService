@@ -17,9 +17,6 @@ import java.util.UUID;
 @Table(name = "message_outbox")
 public class MessageOutboxImpl extends Message{
 
-    @Id
-    Long id;
-
     @Column(columnDefinition = "uuid")
     UUID uuid;
 

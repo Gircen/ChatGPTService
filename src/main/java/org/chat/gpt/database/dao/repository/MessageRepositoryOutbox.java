@@ -3,6 +3,7 @@ package org.chat.gpt.database.dao.repository;
 import org.chat.gpt.database.entity.MessageInboxImpl;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface MessageRepositoryOutbox extends CrudRepository<MessageInboxImpl, Long> {
 
@@ -11,6 +12,8 @@ public interface MessageRepositoryOutbox extends CrudRepository<MessageInboxImpl
 
     @Override
     Optional<MessageInboxImpl> findById(Long primaryKey);
+
+    Optional<MessageInboxImpl> findByUuid(UUID uuid);
 
     @Override
     Iterable<MessageInboxImpl> findAll();

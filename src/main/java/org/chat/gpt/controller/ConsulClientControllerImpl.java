@@ -3,6 +3,8 @@ package org.chat.gpt.controller;
 import org.chat.gpt.config.ApplicationConfig;
 import org.chat.gpt.controller.template.ControllerImpl;
 import org.chat.gpt.database.dao.repository.MessageRepositoryInbox;
+import org.chat.gpt.database.dao.repository.MessageRepositoryOutbox;
+import org.chat.gpt.database.entity.MessageInboxImpl;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -17,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.ws.rs.ServiceUnavailableException;
 import java.net.URI;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @EnableAutoConfiguration
@@ -27,9 +31,9 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     private final DiscoveryClient discoveryClient;
     private final RestTemplate restTemplate;
     private final ApplicationConfig applicationConfig;
-    private final MessageRepositoryInbox repository;
+    private final MessageRepositoryOutbox repository;
 
-    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryInbox repository) {
+    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryOutbox repository) {
         this.discoveryClient = discoveryClient;
         this.repository = repository;
         this.restTemplate = new RestTemplate();
