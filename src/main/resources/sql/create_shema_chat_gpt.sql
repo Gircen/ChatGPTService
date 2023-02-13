@@ -20,6 +20,7 @@ comment on column chat_gpt.dict_model_open_ai.DESCRIPTION is 'Описание';
 comment on column chat_gpt.dict_model_open_ai.CREATED_AT is 'Дата создания записи';
 comment on column chat_gpt.dict_model_open_ai.UPDATED_AT is 'Дата обновления записи';
 
+-- Надо разбить таблицу на части (Слишком большая)
 create table if not exists chat_gpt.message_settings(
                                                         ID serial NOT NULL,
                                                         ID_MODEL integer NOT NULL,
