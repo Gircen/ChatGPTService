@@ -1,6 +1,7 @@
 package org.chat.gpt;
 
 
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.io.IOException;
 
@@ -22,6 +24,8 @@ import java.io.IOException;
         "org.chat.gpt.factory.common",
         "org.chat.gpt.service"
 })
+
+@EnableAsync
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableKafka
@@ -29,7 +33,7 @@ import java.io.IOException;
 @EnableJpaAuditing
 @EnableJpaRepositories("org.chat.gpt.database.dao.repository")
 public class Application {
-
+    
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 

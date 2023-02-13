@@ -88,7 +88,7 @@ public abstract class ControllerImpl implements Controller{
 
 
     @GetMapping("/")
-    public ResponseEntity<String> getMap() throws RestClientException, JsonProcessingException, ExecutionException {
+    public ResponseEntity<String> getMap() throws RestClientException, JsonProcessingException, ExecutionException, InterruptedException {
 
         String result =
                 html(

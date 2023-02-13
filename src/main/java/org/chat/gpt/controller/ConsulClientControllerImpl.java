@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.chat.gpt.config.ApplicationConfig;
 import org.chat.gpt.controller.template.ControllerImpl;
 import org.chat.gpt.database.dao.repository.MessageRepositoryOutbox;
+import org.chat.gpt.dto.OpenAiRequest;
+import org.chat.gpt.service.OpenAiService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -17,7 +19,9 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.ws.rs.ServiceUnavailableException;
 import java.net.URI;
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 
@@ -29,13 +33,11 @@ public class ConsulClientControllerImpl extends ControllerImpl {
     private final DiscoveryClient discoveryClient;
     private final RestTemplate restTemplate;
     private final ApplicationConfig applicationConfig;
-    private final MessageRepositoryOutbox repository;
-    private final OpenAiController openAiController;
+    private final OpenAiService openAiService;
 
-    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryOutbox repository, OpenAiController openAiController) {
+    public ConsulClientControllerImpl(DiscoveryClient discoveryClient, ApplicationConfig applicationConfig, MessageRepositoryOutbox repository, OpenAiService openAiService) {
         this.discoveryClient = discoveryClient;
-        this.repository = repository;
-        this.openAiController = openAiController;
+        this.openAiService = openAiService;
         this.restTemplate = new RestTemplate();
         this.applicationConfig = applicationConfig;
     }
@@ -49,12 +51,12 @@ public class ConsulClientControllerImpl extends ControllerImpl {
 
     @Override
     @GetMapping("/")
-    public ResponseEntity<String> getMap() throws RestClientException, JsonProcessingException, ExecutionException {
+    public ResponseEntity<String> getMap() throws ExecutionException, JsonProcessingException, InterruptedException {
         return super.getMap();
     }
 
     @GetMapping("/health-check/")
-    public ResponseEntity<String> checkHealth () throws Exception {
+    public ResponseEntity<String> checkHealth () {
 
         String message = "I a live!";
         return new ResponseEntity<>(message, HttpStatus.OK);

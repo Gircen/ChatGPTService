@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.chat.gpt.dto.MessageKafkaDto;
+import org.chat.gpt.service.mediator.MediatorSingleton;
+import org.springframework.context.ApplicationContext;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class KafkaMessageServiceImpl implements KafkaMessageService{
 
+    private final ApplicationContext applicationContext;
     private final KafkaTemplate<Long, MessageKafkaDto> kafkaMessageTemplate;
     private final ObjectMapper objectMapper;
-
-    public KafkaMessageServiceImpl(KafkaTemplate<Long, MessageKafkaDto> kafkaMessageTemplate, ObjectMapper objectMapper) {
+    public KafkaMessageServiceImpl(ApplicationContext applicationContext, KafkaTemplate<Long, MessageKafkaDto> kafkaMessageTemplate, ObjectMapper objectMapper) {
+        this.applicationContext = applicationContext;
         this.kafkaMessageTemplate = kafkaMessageTemplate;
         this.objectMapper = objectMapper;
     }
@@ -35,6 +38,8 @@ public class KafkaMessageServiceImpl implements KafkaMessageService{
     @KafkaListener(id = "ChatDPT", topics = {"server.chatdpt"}, containerFactory = "singleFactory")
     public void consume(MessageKafkaDto dto) {
         log.info("=> consumed {}", writeValueAsString(dto));
+        MediatorSingleton singleton = (MediatorSingleton)applicationContext.getBean("MediatorSingleton");
+        singleton.start(dto);
     }
 
     private String writeValueAsString(MessageKafkaDto dto) {
