@@ -6,14 +6,10 @@ import org.chat.gpt.database.entity.MessageInboxImpl;
 import org.chat.gpt.dto.MessageKafkaDto;
 import org.chat.gpt.dto.OpenAiRequest;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 import java.util.UUID;
 
-@Configuration
 @Data
 public class MediatorSingleton {
 
@@ -25,7 +21,7 @@ public class MediatorSingleton {
     public MediatorSingleton getInstance() {
         return new MediatorSingleton();
     }
-    @Transactional
+
     public void start(MessageKafkaDto messageKafkaDto) {
         if(messageKafkaDto.getValue() == null)
             return;

@@ -34,6 +34,7 @@ public class OpenAiService {
     }
 
     AsyncResult<String> sendMessage(OpenAiRequest openAiRequest) throws JsonProcessingException {
+
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
         header.add("Authorization",String.format("Bearer %s",openAiConfig.getKey()));
@@ -52,7 +53,7 @@ public class OpenAiService {
             Thread.sleep(100);
         save(future.get());
     }
-    private void save(String result){
+    private void save(String result) {
 
     }
 }

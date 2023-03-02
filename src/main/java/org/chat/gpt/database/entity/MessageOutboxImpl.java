@@ -9,7 +9,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate

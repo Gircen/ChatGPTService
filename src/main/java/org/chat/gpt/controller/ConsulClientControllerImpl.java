@@ -6,6 +6,7 @@ import org.chat.gpt.controller.template.ControllerImpl;
 import org.chat.gpt.database.dao.repository.MessageRepositoryOutbox;
 import org.chat.gpt.dto.OpenAiRequest;
 import org.chat.gpt.service.OpenAiService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,7 +22,6 @@ import javax.ws.rs.ServiceUnavailableException;
 import java.net.URI;
 import java.util.LinkedHashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 
